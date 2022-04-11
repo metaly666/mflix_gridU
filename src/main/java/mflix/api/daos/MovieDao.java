@@ -154,6 +154,7 @@ public class MovieDao extends AbstractMFlixDao {
         Bson projection = Projections.metaTextScore("score");
         Bson sort = Sorts.metaTextScore("score");
         List<Document> movies = new ArrayList<>();
+        //todo @gordy345 sort is in not optimal place. It have to be moved to the end of query
         moviesCollection
                 .find(textFilter)
                 .projection(projection)
@@ -181,6 +182,7 @@ public class MovieDao extends AbstractMFlixDao {
         //TODO> Ticket: Subfield Text Search - implement the expected cast
         // filter and sort
         List<Document> movies = new ArrayList<>();
+         //todo @gordy345 sort is in not optimal place. It have to be moved to the end of query
         moviesCollection
                 .find(castFilter)
                 .sort(sort)
@@ -208,6 +210,7 @@ public class MovieDao extends AbstractMFlixDao {
         List<Document> movies = new ArrayList<>();
         // TODO > Ticket: Paging - implement the necessary cursor methods to support simple
         // pagination like skip and limit in the code below
+         //todo @gordy345 sort is in not optimal place. It have to be moved to the end of query
         moviesCollection.find(castFilter)
                 .sort(sort)
                 .skip(skip)
