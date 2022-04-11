@@ -56,6 +56,7 @@ public class UserDao extends AbstractMFlixDao {
      */
     public boolean addUser(User user) {
         //TODO > Ticket: Durable Writes -  you might want to use a more durable write concern here!
+        // todo @gordy345 add checking if this user exists
         try {
             usersCollection.insertOne(user);
         } catch (MongoWriteException e) {
@@ -157,6 +158,7 @@ public class UserDao extends AbstractMFlixDao {
         //TODO> Ticket: User Preferences - implement the method that allows for user preferences to
         // be updated.
         if(userPreferences == null) throw new IncorrectDaoOperation("User preferences cannot be null");
+         // todo @gordy345 check if user exist and warn a readable log if it does not exist
         try {
             return usersCollection
                     .updateOne(Filters.eq("email", email), set("preferences", userPreferences))
