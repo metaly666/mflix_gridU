@@ -79,6 +79,8 @@ public class CommentDao extends AbstractMFlixDao {
 
         // TODO> Ticket - Update User reviews: implement the functionality that enables adding a new
         // comment.
+        // todo @gordy345 what if comment.getId() is empty?
+        // todo @gordy345 do not write in 1 sentence and always use bracers;
         if(comment.getId() == null) throw new IncorrectDaoOperation("ID cannot be null");
         try {
             commentCollection.insertOne(comment);
@@ -107,6 +109,7 @@ public class CommentDao extends AbstractMFlixDao {
 
         // TODO> Ticket - Update User reviews: implement the functionality that enables updating an
         // user own comments
+        // todo @gordy345 add email to filter criteria
         Comment comm = commentCollection.find(Filters.eq(new ObjectId(commentId))).first();
         if(comm == null || !comm.getEmail().equals(email)) return false;
         try {
@@ -115,6 +118,7 @@ public class CommentDao extends AbstractMFlixDao {
         } catch (Exception e) {
             System.out.println("Exception happened while updating comment: " + e.getMessage());
         }
+        //todo @gordy345 lack of logs. Change S.O.P to logging
         return false;
         // TODO> Ticket - Handling Errors: Implement a try catch block to
         // handle a potential write exception when given a wrong commentId.
@@ -131,12 +135,14 @@ public class CommentDao extends AbstractMFlixDao {
         // TODO> Ticket Delete Comments - Implement the method that enables the deletion of a user
         // comment
         // TIP: make sure to match only users that own the given commentId
+        // todo @gordy345 add verification of commentId
         Bson criteria = Filters.and(Filters.eq(new ObjectId(commentId)), Filters.eq("email", email));
         try {
             return commentCollection.deleteOne(criteria).getDeletedCount() > 0;
         } catch (Exception e) {
             System.out.println("Exception happened while deleting comment: " + e.getMessage());
         }
+        //todo @gordy345 lack of logs. Change S.O.P to logging
         return false;
         // TODO> Ticket Handling Errors - Implement a try catch block to
         // handle a potential write exception when given a wrong commentId.
